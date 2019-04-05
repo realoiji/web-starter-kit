@@ -10,6 +10,7 @@
 
 ### Component
 - Loading
+- Modal
 - form
 - input
 - validation
