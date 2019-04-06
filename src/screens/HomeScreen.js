@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import Header from '../components/Header';
 import { mediaQuery } from '../app/styles/function';
-import { getFile } from '../utils';
+import { getFile } from '~/utils';
 
 const HomeScreen = () => {
   return (

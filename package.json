@@ -18,10 +18,10 @@
     "react-scripts": "2.1.8"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build && node script-build",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build && node script-build",
     "build:staging": "env-cmd .env.staging npm run build",
-    "test": "react-scripts test",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -32,5 +32,10 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "babel-plugin-root-import": "^6.1.0",
+    "customize-cra": "^0.2.12",
+    "react-app-rewired": "^2.1.1"
+  }
 }

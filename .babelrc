@@ -4,7 +4,16 @@
       "plugins": ["emotion"]
     },
     "development": {
-      "plugins": [["emotion", { "sourceMap": true }]]
+      "plugins": [
+        ["emotion", { "sourceMap": true }],
+        [
+          "babel-plugin-root-import",
+          {
+            "rootPathSuffix": "./src",
+            "rootPathPrefix": "~"
+          }
+        ],
+      ]
     }
   }
 }
