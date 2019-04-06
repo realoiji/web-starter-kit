@@ -16,7 +16,7 @@ const allRoutes = [
     component: HomeScreen,
     routes: [
       {
-        path: '//AboutScreen',
+        path: '/home/AboutScreen',
         component: AboutScreen
       }
     ]

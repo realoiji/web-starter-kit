@@ -6,7 +6,11 @@
     "@emotion/core": "^10.0.10",
     "@emotion/styled": "^10.0.10",
     "babel-plugin-emotion": "^10.0.9",
+    "dotenv": "^7.0.0",
     "emotion": "^10.0.9",
+    "env-cmd": "^8.0.2",
+    "fs-extra": "^7.0.1",
+    "history": "^4.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-helmet": "^5.2.0",
@@ -15,7 +19,8 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && node script-build",
+    "build:staging": "env-cmd .env.staging npm run build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

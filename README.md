@@ -9,7 +9,9 @@
 - description
 
 ### Component
+- Preload
 - Loading
+- lazyload
 - Modal
 - form
 - input
@@ -25,6 +27,19 @@
 
 ### Utils
 - fetch api
+
+## ENV Config
+choose 1 choice and you don't forget insert slash end line
+https://facebook.github.io/create-react-app/docs/advanced-configuration
+### file protocol
+- PUBLIC_URL=file:///web-starter-kit/build/
+
+### http protocol
+- PUBLIC_URL=/
+
+### http protocol + subdirectory
+
+- PUBLIC_URL=/domain.com/test
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
