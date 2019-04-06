@@ -1,13 +1,15 @@
 import React from 'react';
-import { Router }  from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import styled from '@emotion/styled';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 import { createBrowserHistory, createHashHistory } from 'history';
 
 import Routes from './routes';
 import './styles';
-import { isProtocolFile } from '../utils';
-import ScrollToTop from '../components/ScrollToTop';
+import { isProtocolFile } from '~/utils';
+import ScrollToTop from '~/components/ScrollToTop';
+import ThemeProvider from '~/context/theme';
+import TranslateProvider from '~/context/translate';
 
 const { PUBLIC_URL } = process.env;
 
@@ -25,22 +27,27 @@ const history = isProtocolFile() ? hashHistory : browserHistory;
 
 const App = () => {
   return (
-    <Router
-      history={history}
-    >
-      <ScrollToTop>
-        <Styled>
-          <Helmet>
-            <title>App</title>
-            <meta name="description" content="testing react  web starter kit" />
-            <meta name="keywords" content="react,seo, web starter kit" />
-          </Helmet>
-          <Routes/>
-        </Styled>
-      </ScrollToTop>
+    <Router history={history}>
+      <ThemeProvider>
+        <TranslateProvider>
+          <ScrollToTop>
+            <Styled>
+              <Helmet>
+                <title>App</title>
+                <meta
+                  name="description"
+                  content="testing react  web starter kit"
+                />
+                <meta name="keywords" content="react,seo, web starter kit" />
+              </Helmet>
+              <Routes />
+            </Styled>
+          </ScrollToTop>
+        </TranslateProvider>
+      </ThemeProvider>
     </Router>
   );
-}
+};
 
 export default App;
 
