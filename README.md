@@ -1,6 +1,19 @@
 # Web Starter Kit
 
+## Have Feature
+- React Hook
+- Router support file protocol and subdirectory
+- Scroll to top after change page
+- Media query in style
+- Style component (use emotion)
+- Root import
+
 ## Future Feature
+
+### Document
+- Installation
+- Configulation
+- Deploy
 
 ### Header menu
 - router
@@ -17,13 +30,18 @@
 - input
 - validation
 
-### example for send and get param in react router
+### Context API
+- multilanguage
+- theme
 
-### styleguide
+### Example Code (styleguide)
+- send and get param in react router
+- use media query
+- use fetch (get, post, put, delete)
+- use utils
 
 ### Styles
 - grid
-- mediaquery
 
 ### Utils
 - fetch api
@@ -31,15 +49,16 @@
 ## ENV Config
 choose 1 choice and you don't forget insert slash end line
 https://facebook.github.io/create-react-app/docs/advanced-configuration
-### file protocol
-- PUBLIC_URL=file:///web-starter-kit/build/
 
-### http protocol
+
+### http protocol (default)
 - PUBLIC_URL=/
 
 ### http protocol + subdirectory
+- PUBLIC_URL=/subdirectory/
 
-- PUBLIC_URL=/domain.com/test
+### file protocol
+- PUBLIC_URL=file:///local/path/web-starter-kit/build/
 
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
