@@ -1,7 +1,16 @@
 {
   "env": {
     "production": {
-      "plugins": ["emotion"]
+      "plugins": [
+        ["emotion"],
+        [
+          "babel-plugin-root-import",
+          {
+            "rootPathSuffix": "./src",
+            "rootPathPrefix": "~"
+          }
+        ]
+      ]
     },
     "development": {
       "plugins": [
@@ -12,7 +21,7 @@
             "rootPathSuffix": "./src",
             "rootPathPrefix": "~"
           }
-        ],
+        ]
       ]
     }
   }
