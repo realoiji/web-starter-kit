@@ -10,6 +10,7 @@ import { isProtocolFile } from '~/utils';
 import ScrollToTop from '~/components/ScrollToTop';
 import ThemeProvider from '~/context/theme';
 import TranslateProvider from '~/context/translate';
+import AppProvider from '~/context/app';
 
 const { PUBLIC_URL } = process.env;
 
@@ -28,23 +29,25 @@ const history = isProtocolFile() ? hashHistory : browserHistory;
 const App = () => {
   return (
     <Router history={history}>
-      <ThemeProvider>
-        <TranslateProvider>
-          <ScrollToTop>
-            <Styled>
-              <Helmet>
-                <title>App</title>
-                <meta
-                  name="description"
-                  content="testing react  web starter kit"
-                />
-                <meta name="keywords" content="react,seo, web starter kit" />
-              </Helmet>
-              <Routes />
-            </Styled>
-          </ScrollToTop>
-        </TranslateProvider>
-      </ThemeProvider>
+      <AppProvider>
+        <ThemeProvider>
+          <TranslateProvider>
+            <ScrollToTop>
+              <Styled>
+                <Helmet>
+                  <title>App</title>
+                  <meta
+                    name="description"
+                    content="testing react  web starter kit"
+                  />
+                  <meta name="keywords" content="react,seo, web starter kit" />
+                </Helmet>
+                <Routes />
+              </Styled>
+            </ScrollToTop>
+          </TranslateProvider>
+        </ThemeProvider>
+      </AppProvider>
     </Router>
   );
 };
