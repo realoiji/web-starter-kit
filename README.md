@@ -7,6 +7,7 @@
 - Media query in style
 - Style component (use emotion)
 - Root import
+- AppProvider (state manager instead redux)
 
 ## Future Feature
 
@@ -16,7 +17,7 @@
 - Deploy
 
 ### Header menu
-- router
+- navigation
 - meta
 - title
 - description
