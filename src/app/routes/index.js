@@ -1,15 +1,15 @@
-import React, { lazy, Suspense } from 'react';
+import React, { lazy, Suspense, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
-import { AnimatedSwitch, spring } from 'react-router-transition';
+import posed, { PoseGroup } from 'react-pose';
 
-// import NotFoundScreen from "../screens/NotFoundScreen"
-// import HomeScreen from "../screens/HomeScreen"
-// import EnquiryScreen from "../screens/EnquiryScreen"
+import { PRELOAD_DURATION } from 'app/variables';
+import { triggerPreload } from 'components/Loading';
 
-const NotFoundScreen = lazy(() => import('~/screens/NotFoundScreen'));
-const HomeScreen = lazy(() => import('~/screens/HomeScreen'));
-const AboutScreen = lazy(() => import('~/screens/AboutScreen'));
-const EnquiryScreen = lazy(() => import('~/screens/EnquiryScreen'));
+const NotFoundScreen = lazy(() => import('screens/NotFoundScreen'));
+const HomeScreen = lazy(() => import('screens/HomeScreen'));
+const AboutScreen = lazy(() => import('screens/AboutScreen'));
+const EnquiryScreen = lazy(() => import('screens/EnquiryScreen'));
+const LoginScreen = lazy(() => import('screens/LoginScreen'));
 
 const allRoutes = [
   {
@@ -27,46 +27,60 @@ const allRoutes = [
     component: EnquiryScreen
   },
   {
+    path: '/login',
+    component: LoginScreen
+  },
+  {
     path: '*',
     component: NotFoundScreen
   }
 ];
 
+const RouteContainer = posed.div({
+  enter: {
+    opacity: 1,
+    delay: PRELOAD_DURATION * 1000,
+    transition: {
+      duration: 1000,
+    },
+    // beforeChildren: true
+  },
+  exit: {
+    opacity: 0,
+    transition: {
+      duration: 0,
+    }
+  }
+});
+
+const renderRoutes = routes => {
+  const dataRoutes = routes.map(
+    (
+      {
+        path,
+        exact = true,
+        component: Component = () => <NotFoundScreen />,
+        admin = false
+      },
+      i
+    ) => {
+      // console.debug('map route', i, path);
+      return (
+        <Route
+          key={`route-${i}`}
+          path={path}
+          exact={exact}
+          render={({ history, location, ...props }) => {
+            return <Component {...props} />;
+          }}
+        />
+      );
+    }
+  );
+  return dataRoutes;
+};
+
 const routeForRender = [];
-
-const slide = val => spring(val, {
-  stiffness: 80,
-  damping: 16
-});
-
-const pageTransitions = {
-  atEnter: {
-    opacity: 0
-  },
-  atLeave: {
-    opacity: slide(0)
-  },
-  atActive: {
-    opacity: slide(1)
-  }
-};
-
-const topBarTransitions = {
-  atEnter: {
-    offset: -100
-  },
-  atLeave: {
-    offset: slide(-150)
-  },
-  atActive: {
-    offset: slide(0)
-  }
-};
-
-const mapStylesPage = styles => ({
-  opacity: styles.opacity
-});
-
 const collectRoutes = routes => {
   routes.forEach(route => {
     const { routes } = route;
@@ -74,39 +88,30 @@ const collectRoutes = routes => {
     if (routes) collectRoutes(routes);
   });
 };
-
-const renderRoutes = routes =>
-  routes.map(
-    ({ path, exact = true, component = () => <NotFoundScreen /> }, i) => (
-      <Route
-        key={i}
-        atEnter={topBarTransitions.atEnter}
-        atLeave={topBarTransitions.atLeave}
-        atActive={topBarTransitions.atActive}
-        mapStyles={styles => ({
-          transform: `translateY(${styles.offset}%)`
-        })}
-        path={path}
-        exact={exact}
-        component={component}
-      />
-    )
-  );
-
 collectRoutes(allRoutes);
 
-export default () => {
+export default ({ location }) => {
+  console.debug('routing render', location);
+  useEffect(() => {
+    console.debug('routing useEffect enter');
+    const delayTriggerPreload = setTimeout(() => {
+      triggerPreload({ pageName: location.pathname, pageStatus: 'enter' });
+    }, 2000);
+    return () => {
+      console.debug('routing useEffect exit');
+      clearTimeout(delayTriggerPreload);
+      triggerPreload({ pageName: location.pathname, pageStatus: 'exit' });
+    };
+  }, [location]);
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <AnimatedSwitch
-        atEnter={pageTransitions.atEnter}
-        atLeave={pageTransitions.atLeave}
-        atActive={pageTransitions.atActive}
-        mapStyles={mapStylesPage}
-        className="switch-wrapper"
-      >
-        {renderRoutes(routeForRender)}
-      </AnimatedSwitch>
+    <Suspense fallback={<div />}>
+      <PoseGroup>
+        <RouteContainer key={`route-container-${location.key}`}>
+          <Switch className="switch-wrapper">
+            {renderRoutes(routeForRender)}
+          </Switch>
+        </RouteContainer>
+      </PoseGroup>
     </Suspense>
   );
 };

@@ -1,15 +1,16 @@
 import React from 'react';
-import { Router } from 'react-router-dom';
+import { Router, Route } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { Helmet } from 'react-helmet';
 import { createBrowserHistory, createHashHistory } from 'history';
 
-import Routes from './routes';
 import './styles';
-import { isProtocolFile } from '~/utils';
-import ScrollToTop from '~/components/ScrollToTop';
-import ThemeProvider from '~/context/theme';
-import TranslateProvider from '~/context/translate';
+import Routes from './routes';
+import { isProtocolFile } from 'utils';
+import ThemeProvider from 'context/theme';
+import TranslateProvider from 'context/translate';
+import ScrollToTop from 'components/ScrollToTop';
+import Loading from 'components/Loading';
 
 const { PUBLIC_URL } = process.env;
 
@@ -27,25 +28,28 @@ const history = isProtocolFile() ? hashHistory : browserHistory;
 
 const App = () => {
   return (
-    <Router history={history}>
-      <ThemeProvider>
-        <TranslateProvider>
-          <ScrollToTop>
-            <Styled>
-              <Helmet>
-                <title>App</title>
-                <meta
-                  name="description"
-                  content="testing react  web starter kit"
-                />
-                <meta name="keywords" content="react,seo, web starter kit" />
-              </Helmet>
-              <Routes />
-            </Styled>
-          </ScrollToTop>
-        </TranslateProvider>
-      </ThemeProvider>
-    </Router>
+    <>
+      <Loading />
+      <Router history={history}>
+        <ThemeProvider>
+          <TranslateProvider>
+            <ScrollToTop>
+              <Styled>
+                <Helmet>
+                  <title>App</title>
+                  <meta
+                    name="description"
+                    content="testing react  web starter kit"
+                  />
+                  <meta name="keywords" content="react,seo, web starter kit" />
+                </Helmet>
+                <Route render={props => <Routes {...props} />} />
+              </Styled>
+            </ScrollToTop>
+          </TranslateProvider>
+        </ThemeProvider>
+      </Router>
+    </>
   );
 };
 

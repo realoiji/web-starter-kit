@@ -3,25 +3,11 @@
     "production": {
       "plugins": [
         ["emotion"],
-        [
-          "babel-plugin-root-import",
-          {
-            "rootPathSuffix": "./src",
-            "rootPathPrefix": "~"
-          }
-        ]
       ]
     },
     "development": {
       "plugins": [
         ["emotion", { "sourceMap": true }],
-        [
-          "babel-plugin-root-import",
-          {
-            "rootPathSuffix": "./src",
-            "rootPathPrefix": "~"
-          }
-        ]
       ]
     }
   }

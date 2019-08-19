@@ -19,3 +19,5 @@ export const ZINDEX_POPUP = 8;
 // dimension
 export const DIM_HEADER_HEIGHT = '100px';
 export const DIM_FOOTER_HEIGHT = '100px';
+
+export const PRELOAD_DURATION = 2;
