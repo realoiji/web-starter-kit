@@ -96,7 +96,7 @@ export default ({ location }) => {
     console.debug('routing useEffect enter');
     const delayTriggerPreload = setTimeout(() => {
       triggerPreload({ pageName: location.pathname, pageStatus: 'enter' });
-    }, 2000);
+    }, PRELOAD_DURATION * 1000);
     return () => {
       console.debug('routing useEffect exit');
       clearTimeout(delayTriggerPreload);
