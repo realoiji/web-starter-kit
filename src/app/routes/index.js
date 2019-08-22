@@ -2,6 +2,7 @@ import React, { lazy, Suspense, useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import posed, { PoseGroup } from 'react-pose';
 
+import AdminRoute from 'app/routes/admin';
 import { PRELOAD_DURATION } from 'app/variables';
 import { triggerPreload } from 'components/Loading';
 
@@ -23,6 +24,7 @@ const allRoutes = [
     ]
   },
   {
+    admin: true,
     path: '/EnquiryScreen',
     component: EnquiryScreen
   },
@@ -70,7 +72,8 @@ const renderRoutes = routes => {
           key={`route-${i}`}
           path={path}
           exact={exact}
-          render={({ history, location, ...props }) => {
+          render={(props) => {
+            if (admin) return <AdminRoute {...props} component={Component} />;
             return <Component {...props} />;
           }}
         />
