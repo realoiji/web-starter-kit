@@ -1,77 +1,76 @@
-import React, { useState, createContext, useContext, useEffect } from 'react';
+import React, { useState, createContext, useContext, useEffect, useCallback } from 'react';
+import useReactRouter from 'use-react-router';
 
 export const AuthContext = createContext();
 
 export const useAuth = () => {
   return useContext(AuthContext);
-}
+};
+
+const mockupUserData = {
+  username: 'admin',
+  name: 'bom',
+  token: '1234',
+  roles: 'admin'
+};
 
 const AuthProvider = ({ children }) => {
   console.log('Render AuthProvider');
   const [user, setUser] = useState(null);
-  const [userLoaded, setUserLoaded] = useState(false);
+  // const [userLoaded, setUserLoaded] = useState(false);
+  const { history } = useReactRouter();
 
-  const authByToken = (token) => {
-    // const userData = `callApi(${token})` // call api
-    // call api for recheck token correct
-    // if yes set data in localstorage & setNewState
-    // else dont do anything
-    const userData = { username: 'admin', name: 'bom', token: '1234', roles: 'admin' };
-    const isPass = token === userData.token;
+  useEffect(() => {
+    console.log('Render AuthProvider useEffect', user);
+  }, [user]);
 
+  const isPassAuth = (isPass, userData) => {
     if (isPass) {
       localStorage.setItem('userInformation', JSON.stringify(userData));
+      console.log('authByUserAndPass', userData);
       setUser(userData);
       // alert success & redirect
     } else {
       localStorage.removeItem('userInformation');
+      setUser(null);
       // alert error & clear button disabled
     }
-    return isPass;    
-  }
+  };
+
+
   const authByUserAndPass = (user, pass) => {
-    const userData = { username: 'admin', name: 'bom', token: '1234', roles: 'admin' };
+    const userData = { ...mockupUserData };
     const isPass = user === userData.username && pass === userData.token;
-
-    if (isPass) {
-      localStorage.setItem('userInformation', JSON.stringify(userData));
-      setUser(user);
-      // alert success & redirect
-    } else {
-      localStorage.removeItem('userInformation');
-      // alert error & clear button disabled
-    }
+    isPassAuth(isPass, userData);
     return isPass;
-  }
+  };
 
-  const getUserLocalStorage = () => {
-    try {
-      const { token, ...rest } = JSON.parse(localStorage.getItem('userInformation')) || {};
-      console.log('userFromLocalStorage', token, rest);
-      if (token) authByToken(token);
-    } catch (error) {
-      console.error('getUserLocalStorage', error);
-    }
-    return null;
-  }
+  const logout = () => {
+    localStorage.removeItem('userInformation');
+    setUser(null);
+    history.push('/login');
+  };
+
+  const authByToken = useCallback(token => {
+    // const userData = `callApi(${token})` // call api
+    // call api for recheck token correct
+    // if yes set data in localstorage & setNewState
+    // else dont do anything
+    const userData = { ...mockupUserData };
+    const isPass = token === userData.token;
+
+    isPassAuth(isPass, userData);
+    return isPass;
+  }, []);
 
   useEffect(() => {
-    getUserLocalStorage();
-    // return () => {
-    //   cleanup
-    // };
-  }, [])
+    const { token, ...rest } = JSON.parse(localStorage.getItem('userInformation')) || {};
+    console.log('userFromLocalStorage', token, rest);
+    if (token) authByToken(token);
+  }, [authByToken]);
 
-  useEffect(() => {
-    console.log('Render AuthProvider useEffect', user);
-    return () => {
-      // cleanup
-    };
-  }, [user])
+  // const authByToken = ;
 
-
-  useEffect(() => {}, []);
-  
   return (
     <AuthContext.Provider
       value={{
@@ -79,8 +78,9 @@ const AuthProvider = ({ children }) => {
         // userLoaded,
         // setUser,
         // setUserLoaded,
+        logout,
         authByToken,
-        authByUserAndPass,
+        authByUserAndPass
       }}
     >
       {children}

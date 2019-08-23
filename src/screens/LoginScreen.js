@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import styled from '@emotion/styled';
-import { Helmet } from 'react-helmet';
+// import { Helmet } from 'react-helmet';
 
 import { useAuth } from 'context/authenticated';
 
 import Header from 'components/Header';
 // import { signin } from 'services/api';
 
-const LoginScreen = (props) => {
-  console.log('Render LoginScreen', props);
+const LoginScreen = ({ history, ...restProps }) => {
+  console.log('Render LoginScreen', history, restProps);
   const [username, setUsername] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [loading, setLoading] = useState(false);
@@ -16,20 +16,21 @@ const LoginScreen = (props) => {
 
   useEffect(() => {
     console.log('Render useEffect user', user);
-    if (user) props.history.push('/EnquiryScreen');
+    if (user) history.push('/EnquiryScreen');
     // return () => {
     //   cleanup
     // };
-  }, [user])
+  }, [user, history]);
 
   const checkAuthentication = () => {
     setTimeout(() => {
       const authPass = authByUserAndPass(username, userPassword);
       console.log('authPass', authPass);
       if (authPass) {
-        props.history.push('/EnquiryScreen');
+        history.push('/EnquiryScreen');
         // redirect to previous link or admin home page
       } else {
+        setLoading(false);
         // show alert filter
       }
     }, 2000);
@@ -37,9 +38,9 @@ const LoginScreen = (props) => {
 
   return (
     <Styled>
-      <Helmet>
+      {/* <Helmet>
         <title>LoginScreen</title>
-      </Helmet>
+      </Helmet> */}
       <Header />
       <h1>LoginScreen</h1>
       <form

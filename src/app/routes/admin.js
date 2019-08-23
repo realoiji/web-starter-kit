@@ -1,14 +1,14 @@
-import React, { useContext } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React from 'react';
+import { Route } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import includes from 'lodash/includes';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 
 import { useAuth } from 'context/authenticated';
 
 const AdminRoute = (props) => {
   console.log('AdminRoute', props);
-  const { user, userLoaded } = useAuth();
+  const { user } = useAuth();
   // if (userLoaded) return <div>Checking User</div>;
   if (!user) {
     if (props.location.pathname !== '/login') {
