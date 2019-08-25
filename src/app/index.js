@@ -9,6 +9,7 @@ import Routes from './routes';
 import { isProtocolFile } from 'utils';
 import ThemeProvider from 'context/theme';
 import TranslateProvider from 'context/translate';
+import AuthProvider from 'context/authenticated';
 import ScrollToTop from 'components/ScrollToTop';
 import Loading from 'components/Loading';
 
@@ -31,23 +32,27 @@ const App = () => {
     <>
       <Loading />
       <Router history={history}>
-        <ThemeProvider>
-          <TranslateProvider>
-            <ScrollToTop>
-              <Styled>
-                <Helmet>
-                  <title>App</title>
-                  <meta
-                    name="description"
-                    content="testing react  web starter kit"
-                  />
-                  <meta name="keywords" content="react,seo, web starter kit" />
-                </Helmet>
-                <Route render={props => <Routes {...props} />} />
-              </Styled>
-            </ScrollToTop>
-          </TranslateProvider>
-        </ThemeProvider>
+        <AuthProvider>
+          <ThemeProvider>
+            <TranslateProvider>
+              <ScrollToTop>
+                <Styled>
+                  <Helmet
+                    titleTemplate="%s - Web starter kit"
+                    defaultTitle="Web starter kit"
+                  >
+                    <meta name="description" content="react web starter kit" />
+                    <meta
+                      name="keywords"
+                      content="react,seo, web starter kit"
+                    />
+                  </Helmet>
+                  <Route render={props => <Routes {...props} />} />
+                </Styled>
+              </ScrollToTop>
+            </TranslateProvider>
+          </ThemeProvider>
+        </AuthProvider>
       </Router>
     </>
   );
@@ -57,4 +62,9 @@ export default App;
 
 const Styled = styled.div`
   label: AppRouter;
+  height: 100%;
+  > div,
+  > div > div {
+    height: 100%;
+  }
 `;

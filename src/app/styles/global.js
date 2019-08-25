@@ -10,13 +10,7 @@ injectGlobal`
     padding: 0;
     font-family: 'PromptRegular';
   }
-  .switch-wrapper {
-    position: relative;
-  }
-  .switch-wrapper > div {
-    position: absolute;
-  }
-  .switch-wrapper > div > div {
-    overflow: hidden;
+  #root {
+    height: 100vh;
   }
 `;
