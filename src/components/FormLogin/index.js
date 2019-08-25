@@ -42,21 +42,34 @@ const FormLogin = (props) => {
           checkAuthentication();
         }}
       >
-        <input
-          type="text"
-          placeholder="username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          value={userPassword}
+        <h2>Hello !</h2>
+        <div className="input-container">
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={e => setUsername(e.target.value)}
+          />
+        </div>
+        <div className="input-container">
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            type="text"
+            placeholder="Password"
+            value={userPassword}
           onChange={e => setUserPassword(e.target.value)}
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Loading...' : 'Sign In'}
-        </button>
+          />
+        </div>
+        <div className="action-button">
+          <a href="/forget-password">Forgot Password ?</a>
+          <button type="submit" disabled={loading}>
+            {loading ? 'Loading...' : 'Sign In'}
+          </button>
+        </div>
+        
       </form>
     </Styled>
   );
@@ -65,5 +78,13 @@ const FormLogin = (props) => {
 export default FormLogin;
 
 const Styled = styled.div`
-  label: header;
+  label: FormLogin;
+  .input-container {
+    display: flex;
+    flex-direction: column;
+  }
+  .action-button {
+    display: flex;
+    justify-content: space-between;
+  }
 `;
