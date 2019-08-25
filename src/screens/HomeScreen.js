@@ -2,11 +2,13 @@ import React, { useContext } from 'react';
 import styled from '@emotion/styled';
 import { Helmet } from 'react-helmet';
 
-import Header from '../components/Header';
-import { mediaQuery } from '../app/styles/function';
-import { getFile } from '~/utils';
-import { ThemeContext } from '../context/theme';
-import { TranslateContext } from '../context/translate';
+import { ThemeContext } from 'context/theme';
+import { TranslateContext } from 'context/translate';
+
+import Header from 'components/Header';
+
+import { getFile } from 'utils';
+import { mediaQuery } from 'app/styles/function';
 
 const HomeScreen = () => {
   const { value, increaseNumber, decreaseNumber } = useContext(ThemeContext);
