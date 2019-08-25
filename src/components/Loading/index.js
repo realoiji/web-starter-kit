@@ -1,4 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
 import posed from 'react-pose';
 
 import { PRELOAD_DURATION } from 'app/variables';
@@ -65,33 +66,42 @@ const Loading = () => {
 
   console.log('render animationStatus', animationStatus);
   return (
-    <div className="loadding">
+    <Styled className="loadding">
       <PreloadRight
-        style={{
-          position: 'absolute',
-          right: '0%',
-          width: '50vw',
-          height: '100vh',
-          backgroundColor: 'blue',
-          zIndex: 9
-        }}
+        className="preload right"
         initialPose="exit"
         pose={animationStatus}
       />
       <PreloadLeft
-        style={{
-          position: 'absolute',
-          left: '0%',
-          width: '50vw',
-          height: '100vh',
-          backgroundColor: 'blue',
-          zIndex: 9
-        }}
+        className="preload left"
         initialPose="exit"
         pose={animationStatus}
       />
-    </div>
+    </Styled>
   );
 };
 
 export default Loading;
+
+const Styled = styled.div`
+  label: Loading;
+  overflow: hidden;
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  .preload {
+    position: absolute;
+    width: 50%;
+    height: 100%;
+    background-color: blue;
+    z-index: 9;
+    pointer-events: visible;
+    &.left {
+      left: 0%;
+    }
+    &.right {
+      right: 0%;
+    }
+  }
+`;
