@@ -37,12 +37,11 @@ const App = () => {
             <TranslateProvider>
               <ScrollToTop>
                 <Styled>
-                  <Helmet>
-                    <title>Web starter kit</title>
-                    <meta
-                      name="description"
-                      content="testing react  web starter kit"
-                    />
+                  <Helmet
+                    titleTemplate="%s - Web starter kit"
+                    defaultTitle="Web starter kit"
+                  >
+                    <meta name="description" content="react web starter kit" />
                     <meta
                       name="keywords"
                       content="react,seo, web starter kit"
@@ -63,4 +62,9 @@ export default App;
 
 const Styled = styled.div`
   label: AppRouter;
+  height: 100%;
+  > div,
+  > div > div {
+    height: 100%;
+  }
 `;

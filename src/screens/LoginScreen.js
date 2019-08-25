@@ -1,71 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from '@emotion/styled';
-// import { Helmet } from 'react-helmet';
+import { Helmet } from 'react-helmet';
+import { mediaQuery } from 'app/styles/function';
 
-import { useAuth } from 'context/authenticated';
-
-import Header from 'components/Header';
+import FormLogin from 'components/FormLogin';
 // import { signin } from 'services/api';
 
 const LoginScreen = ({ history, ...restProps }) => {
   console.log('Render LoginScreen', history, restProps);
-  const [username, setUsername] = useState('');
-  const [userPassword, setUserPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const { user, authByUserAndPass } = useAuth();
-
-  useEffect(() => {
-    console.log('Render useEffect user', user);
-    if (user) history.push('/EnquiryScreen');
-    // return () => {
-    //   cleanup
-    // };
-  }, [user, history]);
-
-  const checkAuthentication = () => {
-    setTimeout(() => {
-      const authPass = authByUserAndPass(username, userPassword);
-      console.log('authPass', authPass);
-      if (authPass) {
-        history.push('/EnquiryScreen');
-        // redirect to previous link or admin home page
-      } else {
-        setLoading(false);
-        // show alert filter
-      }
-    }, 2000);
-  };
-
   return (
     <Styled>
-      {/* <Helmet>
+      <Helmet>
         <title>LoginScreen</title>
-      </Helmet> */}
-      <Header />
-      <h1>LoginScreen</h1>
-      <form
-        onSubmit={e => {
-          e.preventDefault();
-          setLoading(true);
-          checkAuthentication();
-        }}
-      >
-        <input
-          type="text"
-          placeholder="username"
-          value={username}
-          onChange={e => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          placeholder="password"
-          value={userPassword}
-          onChange={e => setUserPassword(e.target.value)}
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? 'Loading...' : 'Sign In'}
-        </button>
-      </form>
+      </Helmet>
+      <div className="form-container">
+        <FormLogin className="" />
+      </div>
     </Styled>
   );
 };
@@ -74,4 +24,27 @@ export default LoginScreen;
 
 const Styled = styled.div`
   label: LoginScreen;
+  background-color: #2f7eff;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  .form-container {
+    background-color: white;
+    border-radius: 12px;
+    max-width: 513px;
+    width: 100%;
+    height: 387px;
+    padding: 30px;
+    margin-left: 90px;
+    margin-right: 90px;
+  }
+  ${mediaQuery(
+    'xs',
+    `
+    .form-container {
+      margin-left: 10px;
+      margin-right: 10px;
+    }
+    `
+  )}
 `;
